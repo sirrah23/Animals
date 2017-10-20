@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
 from pull import animalGroupMap
 
 mappings = animalGroupMap()
@@ -7,14 +7,14 @@ app = Flask(__name__)
 
 @app.route('/')
 def helloWorld():
-    return 'Hello World!'
+    return render_template('index.html')
 
 
-@app.route('/animals', methods=['GET'])
-def animals():
-    singleAnimal = request.args.get('single', '')
+@app.route('/collective', methods=['GET'])
+def collective():
+    subject = request.args.get('subject', '')
     try:
-        m = mappings.get(singleAnimal)
+        m = mappings.get(subject)
         return ','.join(m)
     except:
         return ''

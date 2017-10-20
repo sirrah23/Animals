@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        input {
+            border: 0;
+            outline: 0;
+            background: transparent;
+            border-bottom: 1px solid black;
+        }
+    </style>
+    <body>
+    <h1>Animals</h1>
+    <p>
+        A group of <input type="text" name="subject" id="subject"> is a <span id="collective"></span>
+    </p>
+    <script>
+     document.addEventListener('keypress', (event) => {
+         const keyName = event.key;
+         if (keyName == 'Enter'){
+             getCollective();
+         }
+     });
+
+     function getCollective(){
+         const subject = document.getElementById('subject').value;
+         const collectiveElem = document.getElementById('collective');
+         const link = `/collective?subject=${subject}`;
+         fetch(link).then((response)=>{
+             if (response.ok){
+                 response.text().then((text) =>{
+                    collectiveElem.innerHTML = text.split(',').join(' or ') + '.';
+                 });
+             }
+         });
+     }
+    </script>
+    </body>
+</html>
