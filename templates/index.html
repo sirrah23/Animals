@@ -26,11 +26,17 @@
          const collectiveElem = document.getElementById('collective');
          const link = `/collective?subject=${subject}`;
          fetch(link).then((response)=>{
-             if (response.ok){
-                 response.text().then((text) =>{
-                    collectiveElem.innerHTML = text.split(',').join(' or ') + '.';
-                 });
-             }
+             if (response.ok)
+                return response.text();
+            else
+                return Promise.reject('Response was bad');
+         }).then((text) =>{
+             if(text.length ===0)
+                collectiveElem.innerHTML = '';
+            else
+                collectiveElem.innerHTML = text.split(',').join(' or ') + '.';
+         }).catch(()=>{
+            collectiveElem.innerHTML = '';
          });
      }
     </script>
