@@ -29,7 +29,8 @@ def animalGroupMap():
         else:
             data[cols[0].get_text()].append(cols[1].get_text())
             i += 1
-        return data
+    return dict(data)
+
 
 if __name__ == "__main__":
     animalGroupMap()
